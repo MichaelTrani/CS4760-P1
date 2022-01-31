@@ -1,0 +1,8 @@
+Usage: chain [-h] [-p nprocs] [-c nchars] [-s sleeptime] [-i niters] < textfile
+
+ Option				Meaning
+-p				Number of processes [default 4]
+-c				Number of characters read into the buffer [default 80]
+-s				Time to sleep in each iteration [default 3s]
+-i				Number of iterations in the loop
+< textfile			File containing text to be read through stdin

@@ -77,15 +77,24 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)</OutDir>
-    <IntDir>$(ProjectDir)</IntDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)</RemoteIntRelDir>
+    <IntDir>$(ProjectDir)\int\</IntDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/int/</RemoteIntRelDir>
     <RemoteOutRelDir>$(RemoteProjectRelDir)</RemoteOutRelDir>
+    <TargetName>chain</TargetName>
+    <TargetExt />
   </PropertyGroup>
   <ItemGroup>
     <ClCompile Include="chain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="instruction.txt" />
+    <Text Include="readme.txt" />
+    <Text Include="help" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="chain.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="makefile" />
   </ItemGroup>
   <ItemDefinitionGroup />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

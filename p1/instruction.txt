@@ -3,77 +3,119 @@ Project # 1 Due Date: February 03, 2022
 Important: Please do all projects on opsys
 Linux System Calls and Library Functions
 Purpose
-This is your warm up project building on your knowledge from CMPSCI 2750. The goal of this project is to become familiar with
-the environment in opsys while practicing system calls. You will also demonstrate your proficiency in the use of perror and
-getopt in this submission. Additionally, you should understand the different steps of compilation and linking. The project is
-described by Exercise 3.8 Process Chains (p. 87) in your text by Robbins/Robbins.
-The exercise expands on the process chain of Program 3.1 in the book. So, you will need to study that code well. You will notice
-from Program 3.1 that the chain is described by a child forking another process while the parents performs a small job (such as
-printing a message to stderr) and terminates. The process chain is visualized by Figure 3.2 and is a vehicle to experiment
-with wait(2) and with sharing of devices. All of the processes in the chain created by Program 3.1 share stdin, stdout,
-and stderr. The fprintf to stderr is a critical section of the program. This exercise explores some implications of
-critical sections that we will study in a couple of weeks, and prepare you to appreciate the issues that will be described at that
-time.
+This is your warm up project building on your knowledge from CMPSCI 2750. 
+The goal of this project is to become familiar with the environment in opsys while practicing system calls. 
+You will also demonstrate your proficiency in the use of perror and getopt in this submission. 
+Additionally, you should understand the different steps of compilation and linking. 
+The project is described by Exercise 3.8 Process Chains (p. 87) in your text by Robbins/Robbins.
+The exercise expands on the process chain of Program 3.1 in the book. 
+So, you will need to study that code well. 
+You will notice from Program 3.1 that the chain is described by a child forking another process while the parents performs a small job (such as printing a message to stderr) and terminates. 
+The process chain is visualized by Figure 3.2 and is a vehicle to experiment with wait(2) and with sharing of devices. 
+All of the processes in the chain created by Program 3.1 share stdin, stdout,and stderr. 
+The fprintf to stderr is a critical section of the program. 
+This exercise explores some implications of critical sections that we will study in a couple of weeks, and prepare you to appreciate the issues that will be described at that time.
 
 Task
-Problem: Start by typing in the code described in Program 3.1. Modify it to accept some options and command line parameters.
-The code is structured in such a way that the starting process will have its variable i set to 1, the first child will have it as 2, and
-each subsequent descendant will have it incremented by 1. Each process, before it exits, prints its descendant index, its PID , its
-PPID , and the PID of its child. The parent does not execute wait. Therefore, if the parent terminates before its child, the child
-becomes an orphan. In this case, the child is adopted by a special system process (init) with PID as 1. As a result, some of
-the processes may indicate their PPID as 1.
+Problem: Start by typing in the code described in Program 3.1. 
+Modify it to accept some options and command line parameters.
+The code is structured in such a way that the starting process will have its variable i set to 1, the first child will have it as 2, and each subsequent descendant will have it incremented by 1. 
+Each process, before it exits, prints its descendant index, its PID , its PPID , and the PID of its child. 
+The parent does not execute wait. Therefore, if the parent terminates before its child, the child becomes an orphan. 
+In this case, the child is adopted by a special system process (init) with PID as 1. 
+As a result, some of the processes may indicate their PPID as 1.
 Here is the set of tasks after you have your code compiled.
+
 1. Run your program and observe the results for different number of processes.
+
 2. Redraw Figure 3.2 by filling in actual PID s of the processes in the figure for a run with command-line argument value of 4.
-3. Experiment with different values for the number of processes (nprocs) up to a maximum of 100 processes. Observe the fraction that are adopted by init.
 
-4. Place sleep( sleeptime ); directly before the final fprintf statement in the code. Make sure to use the sleeptime parameter from command line or set it to a default value of 3. Make the previous observation again.
+3. Experiment with different values for the number of processes (nprocs) up to a maximum of 100 processes. 
+	Observe the fraction that are adopted by init.
 
-5. Putalooparoundthefinalfprintfinyourcode. Havetheloopexecuteniterstimes. Putsleep( sleeptime ); inside this loop just before the fprintf statement. Pass niters and sleeptime using command line options. Run the program for several values of nprocs, niters, and sleeptime. Observe the results.
+4. Place sleep( sleeptime ); directly before the final fprintf statement in the code. 
+	Make sure to use the sleeptime parameter from command line or set it to a default value of 3. 
+		Make the previous observation again.
 
-6. Modify the code by adding the wait function call before the final fprintf statement. How does this affect the output of the program? Are you able to execute with a value of nprocs as 100?
+5. Put a loop around the final fprintf in your code. 
+	Have the loop execute niters times. 
+	Putsleep( sleeptime ); inside this loop just before the fprintf statement. 
+	Pass niters and sleeptime using command line options. 
+	Run the program for several values of nprocs, niters, and sleeptime. 
+	Observe the results.
 
-7. Modify your code by replacing the final fprintf statement with four fprintf statements, one each for the four integers displayed. Only the last one should output a newline. What happens when you run this program? Can you tell which process generated each part of the output? Run the program several times and see if there is a difference in the output.
+6. Modify the code by adding the wait function call before the final fprintf statement. 
+	How does this affect the output of the program? 
+	Are you able to execute with a value of nprocs as 100?
 
-8. Modify your code by replacing the final fprintf statement with a loop that reads nchars characters from stdin one character at a time, and puts them in an array called mybuf. The values of nprocs and nchars should be passed as command line options. After the loop, put a ’\0’ character in index nchars of the array so that it contains a string. Output the PID of the process followed by a colon, a space, the string in mybuf, and a newline to stderr in a single fprintf. Run the program for several values of nprocs and nchars. Observe the results. Redirect the stdin from a file with some text that should be enough to make sure that all the processes terminate normally (more than nprocs × nchars characters).
+7. Modify your code by replacing the final fprintf statement with four fprintf statements, one each for the four integers displayed. 
+	Only the last one should output a newline. 
+	What happens when you run this program? 
+	Can you tell which process generated each part of the output? 
+	Run the program several times and see if there is a difference in the output.
+
+8. Modify your code by replacing the final fprintf statement with a loop that reads nchars characters from stdin one character at a time, and puts them in an array called mybuf. 
+	The values of nprocs and nchars should be passed as command line options. 
+	After the loop, put a ’\0’ character in index nchars of the array so that it contains a string. 
+	Output the PID of the process followed by a colon, a space, the string in mybuf, and a newline to stderr in a single fprintf. 
+	Run the program for several values of nprocs and nchars. Observe the results. 
+	Redirect the stdin from a file with some text that should be enough to make sure that all the processes terminate normally (more than nprocs × nchars characters).
 
 Invoking the solution
 Your solution will be invoked using the following command:
+
 chain [-h] [-p nprocs] [-c nchars] [-s sleeptime] [-i niters] < textfile
-nprocs Number of processes [default 4]
-nchars Number of characters read into the buffer [default 80]
-sleeptime Time to sleep in each iteration [default 3s]
-niters Number of iterations in the loop
-textfile File containing text to be read through stdin
+
+	nprocs Number of processes [default 4]
+	nchars Number of characters read into the buffer [default 80]
+	sleeptime Time to sleep in each iteration [default 3s]
+	niters Number of iterations in the loop
+	textfile File containing text to be read through stdin
 
 If a user specifies -h, please print the usage message and terminate.
 
-Please make use of perror after each system call to report any error messages. With the use of perror, I’ll like some meaningful error messages. The format for error messages should be:
+Please make use of perror after each system call to report any error messages. 
+	With the use of perror, I’ll like some meaningful error messages. 
+	The format for error messages should be:
+		chain: Error: Detailed error message
 
-chain: Error: Detailed error message
+where chain is actually the name of the executable (argv[0]) and should be appropriately modified if the name of executable is changed without a need to recompile the source.
 
-where chainis actually the name of the executable (argv[0]) and should be appropriately modified if the name of executable is changed without a need to recompile the source.
 It is required for this project that you use version control (git), a Makefile, and a README. You should check in a version of
 your code at each step of exercise, at the minimum into your git repository. Your README file should consist, at a minimum,
 of a description of how I should compile and run your project, any outstanding problems that it still has, and any problems you
 encountered. Your Makefile should use suffix-rules or pattern-rules and have an option to clean up object files.
 Suggested implementation steps
-1. Set up your git repository, if you have not already done so. You must periodically check your code into the git repository
-(once a day, or whenever you make and test substantial changes). [Day 1]
-2. Create your Makefile. Make sure to use suffix rules or pattern rules. Type in the code from the book and have it working.
-[Day 2]
-3. Write code to parse options and receive the command parameters. Study getopt(3), if you do not know how to do it.
-The man page also has an example to guide you. [Day 3]
+
+1. Set up your git repository, if you have not already done so. [Day 1]
+	You must periodically check your code into the git repository (once a day, or whenever you make and test substantial changes). 
+
+2. Create your Makefile. [Day 2]
+	Make sure to use suffix rules or pattern rules. 
+	Type in the code from the book and have it working.
+
+
+3. Write code to parse options and receive the command parameters. [Day 3]
+	Study getopt(3), if you do not know how to do it.
+	The man page also has an example to guide you. 
+
+
 4. Finish steps 1 and 2. [Day 4]
-5. Finish step 3. You may have to write a shellscript to analyze the output to determine the fraction of processes adopted by
-init. [Day 5-6]
+
+5. Finish step 3. 
+	You may have to write a shellscript to analyze the output to determine the fraction of processes adopted by init. [Day 5-6]
+
 Linux System Calls 3
 6. Finish step 4. [Day 7]
 7. Finish step 5. [Day 8]
 8. Finish step 7. [Day 9]
 9. Finish step 8. [Day 10]
-10. Create the README file. Organize your observations from each step into a file that you can submit. Name this file
-observations. Youmaybuildthisfileusingatextprocessorofyourchoiceandthen, callitasobservations.pdf.
+10. Create the README file. 
+
+Organize your observations from each step into a file that you can submit. 
+	Name this file observations. 
+	You may build this file using a text processor of your choice and then, call it as observations.pdf.
+
 [Day 11]
 Criteria for success
 Please follow the guidelines. Make sure that you are making judicious use of perror. The code should be well-documented

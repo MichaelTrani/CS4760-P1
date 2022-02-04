@@ -88,7 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt" />
-    <Text Include="help" />
+    <Text Include=".help" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="chain.h" />

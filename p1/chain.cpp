@@ -1,6 +1,13 @@
-#include"chain.h"
+/*
+Written by Michael Trani Jan 2022
+CMP SCI 4760 Operating Systems
+This program creates a chain of children processes and logs their PIDs.
 
+*/
+
+#include"chain.h"
 using namespace std;
+
 int main(int argc, char* argv[]){
 
     string programName = argv[0];
@@ -11,13 +18,11 @@ int main(int argc, char* argv[]){
     int nchars = 80; //number of characters read into the buffer
     int sleeptime = 3; //time to sleep in each iteration
     int niters = 1;     //number of iterations in the loop :double check for default
-    //string textfile = "file";  THIS MIGHT BE HANDLED BY THE KERNEL
+    string outfile = "file";  //THIS MIGHT BE HANDLED BY THE KERNEL
 
+    ifstream helper(".help");
 
-
-    ifstream helper("help");
-
-    while ((option = getopt(argc, argv, "hp:c:s:i:")) != -1) {
+    while ((option = getopt(argc, argv, "hp:c:s:i:f:")) != -1) {
         switch (option)
         {
         case 'h':
@@ -28,6 +33,10 @@ int main(int argc, char* argv[]){
 
         case 'p':
             nprocs = atoi(optarg);
+            if (nprocs > 100 || nprocs < 1){
+                cout << "Invalid process count.\n";
+                return 1;
+            }
             break;
 
         case 'c':
@@ -42,13 +51,22 @@ int main(int argc, char* argv[]){
             niters = atoi(optarg);
             break;
 
+        case 'f':
+            outfile = optarg;
+            break;
+
         default:
             break;
         }
     }
 
     helper.close();
-    cout << programName << endl;
+    if ((pFile = fopen(outfile.c_str(), "w")))
+        ;
+    else
+        perror("Chain: Output File Error");
+
+    //cout << programName << endl;
     processor(nprocs, sleeptime);
 
 

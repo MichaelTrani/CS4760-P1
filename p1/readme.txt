@@ -1,7 +1,7 @@
 CHAIN(P1)						User Commands
 
 NAME
-	chain - description goes here
+	chain - creates a chain of children processes and logs PIDs to output file.
 COMPILE
 	$ make
 
@@ -26,3 +26,4 @@ Author
 	January 2022
 
 NOTE
+	Buffer variable not used since made in c++.

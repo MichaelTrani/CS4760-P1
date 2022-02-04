@@ -1,0 +1,1 @@
+When running more than 20 processess the system ceases to allow more children.

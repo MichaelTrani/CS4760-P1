@@ -87,6 +87,7 @@
     <ClCompile Include="chain.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="Observations.txt" />
     <Text Include="readme.txt" />
     <Text Include=".help" />
   </ItemGroup>

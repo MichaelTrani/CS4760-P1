@@ -18,7 +18,7 @@ int main(int argc, char* argv[]){
     int nchars = 80; //number of characters read into the buffer
     int sleeptime = 3; //time to sleep in each iteration
     int niters = 1;     //number of iterations in the loop :double check for default
-    string outfile = "file";  //THIS MIGHT BE HANDLED BY THE KERNEL
+    string outfile = "output";  //THIS MIGHT BE HANDLED BY THE KERNEL
 
     ifstream helper(".help");
 
@@ -41,6 +41,7 @@ int main(int argc, char* argv[]){
 
         case 'c':
             nchars = atoi(optarg);
+            cout << "NOTE: NOT USED SINCE WRITTEN IN C++\n";
             break;
 
         case 's':
@@ -61,15 +62,13 @@ int main(int argc, char* argv[]){
     }
 
     helper.close();
-    if ((pFile = fopen(outfile.c_str(), "w")))
-        ;
-    else
-        perror("Chain: Output File Error");
 
-    //cout << programName << endl;
+    if (!(pFile = fopen(outfile.c_str(), "w"))){
+        perror("chain: output file open error.");
+        return 1;
+
+    }
     processor(nprocs, sleeptime);
-
-
 
     return 0;
 }
